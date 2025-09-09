@@ -6,7 +6,7 @@ use crate::pre_check_addr;
 use crate::transport::TransportSettings;
 use async_trait::async_trait;
 use bytes::{BufMut, BytesMut};
-use futures::{ready, FutureExt};
+use futures::{FutureExt, ready};
 use sha2::{Digest, Sha224};
 use std::io::{Cursor, Error, ErrorKind, Result};
 use std::net::SocketAddr;

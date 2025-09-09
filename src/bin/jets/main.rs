@@ -1,5 +1,5 @@
 use clap::Parser;
-use jets::app::cli::{get_version, Args};
+use jets::app::cli::{Args, get_version};
 use jets::app::env_vars::RESOURCES_DIR;
 use jets::app::{App, Config};
 use std::env;
@@ -15,7 +15,8 @@ fn main() -> Result<()> {
 
     let cwd = env::current_dir()?;
     if env::var(RESOURCES_DIR).is_err() {
-        env::set_var(RESOURCES_DIR, cwd.to_str().unwrap());
+        // TODO: Audit that the environment access only happens in single-threaded code.
+        unsafe { env::set_var(RESOURCES_DIR, cwd.to_str().unwrap()) };
     }
     let args = Args::parse();
     let config = Config::load(args.get_config()?)?;

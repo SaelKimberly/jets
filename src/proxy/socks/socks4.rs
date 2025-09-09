@@ -1,6 +1,6 @@
-use crate::app::connect_tcp_host;
 use crate::app::Context as AppContext;
-use crate::common::{copy_bidirectional, invalid_data_error, Address};
+use crate::app::connect_tcp_host;
+use crate::common::{Address, copy_bidirectional, invalid_data_error};
 use shadowsocks_service::local::socks::socks4::{
     Address as Socks4Address, Command, Error as Socks4Error, HandshakeRequest, HandshakeResponse,
     ResultCode,

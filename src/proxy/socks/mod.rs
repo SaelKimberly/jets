@@ -1,14 +1,14 @@
 pub mod socks4;
 pub mod socks5;
 
-use super::http::handle_tcp as http_handle_tcp;
 use super::Inbound;
-use crate::app::config::Account;
+use super::http::handle_tcp as http_handle_tcp;
 use crate::app::Context;
+use crate::app::config::Account;
 use crate::common::invalid_data_error;
 use crate::transport::raw::{AcceptOpts, TcpListener, UdpSocket};
 use async_trait::async_trait;
-use futures::{future, FutureExt};
+use futures::{FutureExt, future};
 use socks4::Socks4aInbound;
 use socks5::Socks5Inbound;
 pub use socks5::Socks5Outbound;
@@ -18,7 +18,7 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 use tokio::net::TcpStream;
 use tokio::sync::mpsc;
-use tokio::time::{sleep, Duration};
+use tokio::time::{Duration, sleep};
 
 #[derive(Clone, Debug)]
 pub struct SocksInbound {

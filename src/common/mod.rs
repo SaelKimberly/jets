@@ -1,12 +1,12 @@
 pub mod log;
 
-use serde::de::{value, Deserialize, IntoDeserializer};
+use serde::de::{Deserialize, IntoDeserializer, value};
 use serde::ser::Serialize;
 pub use shadowsocks::relay::Address;
 //pub use shadowsocks::relay::tcprelay::utils::copy_bidirectional;
 use std::io::{Error, ErrorKind, Result};
 use std::time::{Duration, Instant};
-use tokio::io::{copy_bidirectional_with_sizes, AsyncRead, AsyncWrite};
+use tokio::io::{AsyncRead, AsyncWrite, copy_bidirectional_with_sizes};
 
 /// shadowsocks-rust, xray and tokio copy_bidirectional method all use 8k buffer
 pub const DEFAULT_BUF_SIZE: usize = 8 * 1024;
@@ -96,7 +96,7 @@ macro_rules! impl_display {
 
 #[macro_export]
 macro_rules! pre_check_addr {
-    ($addr:expr) => {
+    ($addr:expr_2021) => {
         match $addr {
             Address::DomainNameAddress(ref addr, _) => {
                 return Err(std::io::Error::new(

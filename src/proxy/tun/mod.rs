@@ -4,9 +4,9 @@ mod udp;
 mod virt_device;
 
 use super::Inbound;
-use crate::app::sniff::Sniffer;
 use crate::app::Context;
-use crate::common::{invalid_input_error, MAXIMUM_UDP_PAYLOAD_SIZE};
+use crate::app::sniff::Sniffer;
+use crate::common::{MAXIMUM_UDP_PAYLOAD_SIZE, invalid_input_error};
 use crate::transport::raw::AcceptOpts;
 use async_trait::async_trait;
 use cfg_if::cfg_if;
@@ -21,7 +21,7 @@ use std::os::unix::io::RawFd;
 use tcp::TcpTun;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::sync::mpsc;
-use tokio::time::{interval, Duration};
+use tokio::time::{Duration, interval};
 use udp::UdpTun;
 use virt_device::TokenBuffer;
 

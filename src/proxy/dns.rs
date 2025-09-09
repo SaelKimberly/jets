@@ -7,14 +7,14 @@ use hickory_resolver::proto::op::header::MessageType;
 use hickory_resolver::proto::op::response_code::ResponseCode;
 use hickory_resolver::proto::op::{Message, OpCode};
 use hickory_resolver::proto::rr::{
-    rdata::{A, AAAA},
     DNSClass, RData, Record,
+    rdata::{A, AAAA},
 };
 use std::io::Result;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::Arc;
 use tokio::sync::mpsc;
-use tokio::time::{sleep, Duration};
+use tokio::time::{Duration, sleep};
 
 #[derive(Clone, Debug)]
 pub struct DnsInbound {

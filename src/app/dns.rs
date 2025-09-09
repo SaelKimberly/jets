@@ -4,10 +4,12 @@ use super::env_vars::RESOURCES_DIR;
 use super::router::{Domain, MatchType, Router};
 use crate::app::proxy::Outbounds;
 use crate::common::{
-    far_future_instant, invalid_data_error, invalid_input_error, Address, MAXIMUM_UDP_PAYLOAD_SIZE,
+    Address, MAXIMUM_UDP_PAYLOAD_SIZE, far_future_instant, invalid_data_error, invalid_input_error,
 };
 use crate::proxy::{Outbound, ProxySocket, ProxyStream};
 use futures::ready;
+use hickory_resolver::IntoName;
+use hickory_resolver::Resolver;
 use hickory_resolver::config::{
     LookupIpStrategy, NameServerConfig, NameServerConfigGroup, ResolverConfig, ResolverOpts,
 };
@@ -17,13 +19,11 @@ use hickory_resolver::proto::runtime::iocompat::AsyncIoTokioAsStd;
 use hickory_resolver::proto::runtime::{RuntimeProvider, TokioHandle, TokioTime};
 use hickory_resolver::proto::xfer::Protocol;
 use hickory_resolver::system_conf::read_system_conf;
-use hickory_resolver::IntoName;
-use hickory_resolver::Resolver;
 use prost::Message;
 use regex::Regex;
 use std::cell::LazyCell;
 use std::collections::HashMap;
-use std::future::{poll_fn, Future};
+use std::future::{Future, poll_fn};
 use std::io::{Error, ErrorKind, Result};
 use std::net::{IpAddr, SocketAddr};
 use std::path::PathBuf;
@@ -472,7 +472,7 @@ fn parse_domain(mut domain: String) -> Result<Vec<Domain>> {
                 return Err(invalid_input_error(format!(
                     "Geosite does not contain the code of {}",
                     code
-                )))
+                )));
             }
         }
     } else {

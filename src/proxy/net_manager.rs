@@ -1,4 +1,4 @@
-use crate::app::{bind_udp_socket, Context};
+use crate::app::{Context, bind_udp_socket};
 use crate::common::{Address, MAXIMUM_UDP_PAYLOAD_SIZE};
 use crate::proxy::ProxySocket;
 use bytes::Bytes;
@@ -9,9 +9,9 @@ use std::io::{Error, Result};
 use std::marker::PhantomData;
 use std::net::SocketAddr;
 use tokio::io::ReadBuf;
-use tokio::sync::mpsc::{channel, Receiver, Sender};
+use tokio::sync::mpsc::{Receiver, Sender, channel};
 use tokio::task::JoinHandle;
-use tokio::time::{interval, Duration};
+use tokio::time::{Duration, interval};
 
 /// Default UDP session's expire duration
 const DEFAULT_UDP_SESSION_EXPIRY_DURATION: Duration = Duration::from_secs(5 * 60);
@@ -268,7 +268,7 @@ async fn dispatch_received_packet(
     context: Context,
 ) -> Result<()> {
     let socket = match proxy_socket {
-        Some(ref mut socket) => socket,
+        Some(socket) => socket,
         None => {
             let socket = bind_udp_socket(peer_addr, target_addr.clone(), context).await?;
 

@@ -12,9 +12,9 @@ pub mod trojan;
 pub mod tun;
 pub mod vless;
 
+use crate::app::Context as AppContext;
 use crate::app::config::OutboundProtocolOption;
 use crate::app::dns::DnsManager;
-use crate::app::Context as AppContext;
 use crate::common::Address;
 use async_trait::async_trait;
 use bytes::BufMut;

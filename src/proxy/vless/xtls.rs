@@ -1,5 +1,5 @@
 use super::super::{LocalAddr, ProxyStream};
-use crate::common::{find_str_in_str, DEFAULT_BUF_SIZE};
+use crate::common::{DEFAULT_BUF_SIZE, find_str_in_str};
 use crate::impl_asyncwrite_flush_shutdown;
 use crate::transport::tls::TlsStream;
 use bytes::{Buf, BufMut, BytesMut};
@@ -267,7 +267,7 @@ impl AsyncRead for VisionStream {
                     };
                     this.read_state = ReadState::Output(buffer, bytes_left);
                 }
-                ReadState::Output(ref mut buffer, bytes_left) => {
+                ReadState::Output(buffer, bytes_left) => {
                     let len = buf.remaining();
                     let content_length = buffer.remaining();
                     if content_length == 0 {

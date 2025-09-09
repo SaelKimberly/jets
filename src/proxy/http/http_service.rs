@@ -4,17 +4,17 @@ use super::{
     http_client::HttpClient,
     utils::{authority_addr, check_keep_alive, host_addr},
 };
-use crate::app::establish_tcp_tunnel;
 use crate::app::Context;
+use crate::app::establish_tcp_tunnel;
 use crate::common::Address;
 use base64::Engine as _;
 use bytes::Bytes;
-use http_body_util::{combinators::BoxBody, BodyExt};
+use http_body_util::{BodyExt, combinators::BoxBody};
 use hyper::{
+    HeaderMap, Method, Request, Response, StatusCode, Uri, Version,
     body::Incoming,
     header::{GetAll, HeaderValue},
     http::uri::{Authority, Scheme},
-    HeaderMap, Method, Request, Response, StatusCode, Uri, Version,
 };
 use hyper_util::rt::TokioIo;
 use log::{debug, error, trace};
@@ -105,8 +105,7 @@ impl HttpService {
                     Ok(upgraded) => {
                         trace!(
                             "CONNECT tunnel upgrade success, {} <-> {}",
-                            client_addr,
-                            host
+                            client_addr, host
                         );
 
                         let upgraded_io = TokioIo::new(upgraded);

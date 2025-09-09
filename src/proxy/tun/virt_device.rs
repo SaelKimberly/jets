@@ -5,8 +5,8 @@ use std::{
     mem,
     ops::{Deref, DerefMut},
     sync::{
-        atomic::{AtomicBool, Ordering},
         Arc, Mutex,
+        atomic::{AtomicBool, Ordering},
     },
 };
 

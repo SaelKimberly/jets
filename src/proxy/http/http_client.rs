@@ -5,15 +5,15 @@ use super::{
     http_stream::ProxyHttpStream,
     utils::{check_keep_alive, host_addr},
 };
-use crate::app::{connect_tcp_host, Context as AppContext};
-use crate::common::{invalid_data_error, invalid_input_error, Address};
+use crate::app::{Context as AppContext, connect_tcp_host};
+use crate::common::{Address, invalid_data_error, invalid_input_error};
 use hyper::http::{HeaderValue, Method as HttpMethod, Uri, Version as HttpVersion};
 use hyper::{
+    Request, Response,
     body::{Body, Incoming},
     client::conn::{http1, http2},
     http::uri::Scheme,
     rt::{Sleep, Timer},
-    Request, Response,
 };
 use hyper_util::rt::{TokioExecutor, TokioIo};
 use log::{error, trace};
@@ -211,16 +211,14 @@ where
         let response = c.send_request(req).await?;
         trace!(
             "HTTP received response from host: {}, response: {:?}",
-            host,
-            response
+            host, response
         );
 
         // Check keep-alive
         if check_keep_alive(response.version(), response.headers(), false) {
             trace!(
                 "HTTP connection keep-alive for host: {}, response: {:?}",
-                host,
-                response
+                host, response
             );
             self.cache_conn
                 .lock()
@@ -274,8 +272,7 @@ where
     ) -> Result<HttpConnection<B>> {
         trace!(
             "HTTP making new HTTP/1.1 connection to host: {}, scheme: {}",
-            host,
-            scheme
+            host, scheme
         );
 
         let stream = ProxyHttpStream::connect_http(stream);
@@ -311,8 +308,7 @@ where
     ) -> Result<HttpConnection<B>> {
         trace!(
             "HTTP making new TLS connection to host: {}, scheme: {}",
-            host,
-            scheme
+            host, scheme
         );
 
         // TLS handshake, check alpn for h2 support.

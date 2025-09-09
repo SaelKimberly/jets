@@ -1,5 +1,5 @@
 use crate::common::log::JETS_ACCESS_LIST;
-use crate::common::{invalid_input_error, TCP_DEFAULT_KEEPALIVE_TIMEOUT};
+use crate::common::{TCP_DEFAULT_KEEPALIVE_TIMEOUT, invalid_input_error};
 use crate::impl_display;
 use crate::transport::raw::{AcceptOpts, ConnectOpts, TcpSocketOpts, UdpSocketOpts};
 use serde::de::{Deserializer, Error};

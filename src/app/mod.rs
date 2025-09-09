@@ -10,12 +10,12 @@ pub mod sniff;
 pub mod utils;
 
 use crate::app::config::OutboundProtocolOption;
-use crate::common::log::{Logger, Target, JETS_ACCESS_LIST};
-use crate::common::{copy_bidirectional, invalid_data_error, invalid_input_error, Address};
+use crate::common::log::{JETS_ACCESS_LIST, Logger, Target};
+use crate::common::{Address, copy_bidirectional, invalid_data_error, invalid_input_error};
 use crate::proxy::{Outbound, ProxySocket, ProxyStream};
 pub use config::Config;
 use dns::DnsManager;
-use futures::{future, FutureExt};
+use futures::{FutureExt, future};
 use hickory_resolver::proto::op::Message;
 use proxy::{Inbounds, Outbounds};
 use router::Router;
@@ -25,7 +25,7 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::mpsc;
-use utils::{create_abort_signal, ServerHandle};
+use utils::{ServerHandle, create_abort_signal};
 
 pub mod env_vars {
     pub const RESOURCES_DIR: &str = "JETS_RESOURCES_DIR";
@@ -82,7 +82,9 @@ impl App {
             }
             loop_time -= 1;
             if loop_time == 0 {
-                return Err(invalid_input_error("DNS resolve failure or loopback happens, check dns, outbounds and router config"));
+                return Err(invalid_input_error(
+                    "DNS resolve failure or loopback happens, check dns, outbounds and router config",
+                ));
             }
         }
         // make the new dns with updated outbounds

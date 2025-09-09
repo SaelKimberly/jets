@@ -191,14 +191,14 @@ impl Log for Logger {
 
 #[cfg(windows)]
 pub fn set_up_windows_color_terminal() {
-    use std::io::{stdout, IsTerminal};
+    use std::io::{IsTerminal, stdout};
 
     if stdout().is_terminal() {
         unsafe {
             use windows_sys::Win32::Foundation::INVALID_HANDLE_VALUE;
             use windows_sys::Win32::System::Console::{
-                GetConsoleMode, GetStdHandle, SetConsoleMode, CONSOLE_MODE,
-                ENABLE_VIRTUAL_TERMINAL_PROCESSING, STD_OUTPUT_HANDLE,
+                CONSOLE_MODE, ENABLE_VIRTUAL_TERMINAL_PROCESSING, GetConsoleMode, GetStdHandle,
+                STD_OUTPUT_HANDLE, SetConsoleMode,
             };
 
             let stdout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -219,7 +219,7 @@ pub fn set_up_windows_color_terminal() {
 }
 
 fn use_stderr_for_colors() {
-    use std::io::{stderr, IsTerminal};
+    use std::io::{IsTerminal, stderr};
 
     colored::control::set_override(stderr().is_terminal());
 }

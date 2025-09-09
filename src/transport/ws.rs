@@ -1,5 +1,5 @@
 use crate::app::config::WsSettings;
-use crate::common::{invalid_data_error, invalid_input_error, Address};
+use crate::common::{Address, invalid_data_error, invalid_input_error};
 use crate::proxy::{LocalAddr, ProxyStream};
 use bytes::{Bytes, BytesMut};
 use futures::sink::Sink;
@@ -14,11 +14,11 @@ use std::io::{Error, ErrorKind, Result};
 use std::net::SocketAddr;
 use std::pin::Pin;
 use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
-use tokio_tungstenite::{client_async_with_config, WebSocketStream};
+use tokio_tungstenite::{WebSocketStream, client_async_with_config};
+use tungstenite::Message;
 use tungstenite::client::IntoClientRequest;
 use tungstenite::handshake::client::Request;
 use tungstenite::protocol::WebSocketConfig;
-use tungstenite::Message;
 
 #[derive(Clone, Debug)]
 pub struct Ws {
@@ -135,9 +135,11 @@ impl<S: ProxyStream> AsyncRead for WsStream<S> {
 impl<S: ProxyStream> AsyncWrite for WsStream<S> {
     fn poll_write(mut self: Pin<&mut Self>, cx: &mut Context, buf: &[u8]) -> Poll<Result<usize>> {
         log::trace!("poll_write {} bytes", buf.len());
-        ready!(Pin::new(&mut self.inner)
-            .poll_ready(cx)
-            .map_err(|_| broken_pipe()))?;
+        ready!(
+            Pin::new(&mut self.inner)
+                .poll_ready(cx)
+                .map_err(|_| broken_pipe())
+        )?;
 
         let msg = Message::Binary(Bytes::copy_from_slice(buf));
         Pin::new(&mut self.inner)

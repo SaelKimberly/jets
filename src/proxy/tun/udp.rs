@@ -1,7 +1,7 @@
 use super::super::dns::resolve;
 use super::super::net_manager::{NatManager, UdpInboundWrite};
 use crate::app::Context;
-use crate::common::{invalid_data_error, Address};
+use crate::common::{Address, invalid_data_error};
 use bytes::{BufMut, BytesMut};
 use etherparse::PacketBuilder;
 use hickory_resolver::proto::op::Message;

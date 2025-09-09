@@ -2,15 +2,15 @@
 
 use super::super::net_manager::UdpInboundWrite;
 use super::super::{Outbound, ProxySocket, ProxyStream};
+use crate::app::Context as AppContext;
 use crate::app::config::{OutboundProtocolOption, SocksUser};
 use crate::app::connect_tcp_host;
 use crate::app::dns::DnsManager;
-use crate::app::Context as AppContext;
-use crate::common::{copy_bidirectional, invalid_data_error, Address, MAXIMUM_UDP_PAYLOAD_SIZE};
+use crate::common::{Address, MAXIMUM_UDP_PAYLOAD_SIZE, copy_bidirectional, invalid_data_error};
 use crate::pre_check_addr;
 use crate::proxy::net_manager::NatManager;
-use crate::transport::raw::UdpSocket;
 use crate::transport::TransportSettings;
+use crate::transport::raw::UdpSocket;
 use async_trait::async_trait;
 use bytes::{BufMut, BytesMut};
 use futures::ready;
@@ -25,7 +25,7 @@ use std::sync::Arc;
 use std::task::{Context, Poll};
 use tokio::io::{AsyncReadExt, ReadBuf};
 use tokio::net::TcpStream as TokioTcpStream;
-use tokio::time::{interval, sleep, Duration};
+use tokio::time::{Duration, interval, sleep};
 
 #[derive(Clone, Debug)]
 pub struct Socks5Inbound {

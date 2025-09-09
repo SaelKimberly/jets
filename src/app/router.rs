@@ -3,7 +3,7 @@ use super::dat::{Cidr, Domain as ProtoDomain, GeoIpList, GeoSiteList};
 use super::dns::DnsManager;
 use super::env_vars::RESOURCES_DIR;
 use super::proxy::Outbounds;
-use crate::common::{invalid_input_error, Address};
+use crate::common::{Address, invalid_input_error};
 use prost::Message;
 use regex::Regex;
 use std::cell::LazyCell;
@@ -96,7 +96,7 @@ impl Router {
                                 return Err(invalid_input_error(format!(
                                     "Geosite does not contain the code of {}",
                                     real_code
-                                )))
+                                )));
                             }
                         }
                     }
@@ -157,7 +157,7 @@ impl Router {
                                 return Err(invalid_input_error(format!(
                                     "Geoip does not contain the code of {}",
                                     code
-                                )))
+                                )));
                             }
                         }
                     }
@@ -511,7 +511,7 @@ impl IpRange {
 
 #[cfg(test)]
 mod test {
-    use super::{Router, DEFAULT_OUTBOUND_TAG};
+    use super::{DEFAULT_OUTBOUND_TAG, Router};
     use crate::app::config::{RoutingConfig, RoutingRule};
     use crate::common::Address;
     use std::str::FromStr;

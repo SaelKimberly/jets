@@ -1,12 +1,12 @@
-use super::super::{address_type, mux_command, LocalAddr, ProxySocket, ProxyStream};
+use super::super::{LocalAddr, ProxySocket, ProxyStream, address_type, mux_command};
+use super::VlessFlow;
 use super::addons::Addons;
 use super::xtls::VisionStream;
-use super::VlessFlow;
-use crate::common::{from_str, invalid_data_error, to_string, Address, DEFAULT_BUF_SIZE};
+use crate::common::{Address, DEFAULT_BUF_SIZE, from_str, invalid_data_error, to_string};
 use crate::impl_asyncwrite_flush_shutdown;
 use crate::proxy::request_command;
 use bytes::{Buf, BufMut, BytesMut};
-use futures::{ready, FutureExt};
+use futures::{FutureExt, ready};
 use prost::Message;
 use std::io::{Cursor, Error, ErrorKind, Result};
 use std::net::{Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};

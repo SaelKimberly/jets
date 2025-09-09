@@ -1,7 +1,7 @@
 use super::virt_device::{TokenBuffer, VirtTunDevice};
+use crate::app::Context as AppContext;
 use crate::app::establish_tcp_tunnel;
 use crate::app::sniff::{SniffResult, Sniffer};
-use crate::app::Context as AppContext;
 use crate::common::{Address, DEFAULT_BUF_SIZE};
 use crate::transport::raw::{AcceptOpts, TcpSocketOpts};
 use bytes::BytesMut;
@@ -24,8 +24,8 @@ use std::{
     net::{IpAddr, Ipv6Addr, SocketAddr},
     pin::Pin,
     sync::{
-        atomic::{AtomicBool, Ordering},
         Arc,
+        atomic::{AtomicBool, Ordering},
     },
     task::{Context, Poll, Waker},
     thread::{self, JoinHandle, Thread},

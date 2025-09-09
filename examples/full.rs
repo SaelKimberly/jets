@@ -8,10 +8,13 @@ fn main() -> std::io::Result<()> {
     // // export tls key material for wireshark analysis
     // std::env::set_var("SSLKEYLOGFILE", "d:\\sslkey.log");
 
-    std::env::set_var(
-        RESOURCES_DIR,
-        "C:\\Users\\zhangsan946\\AppData\\Local\\Spaceship\\resources",
-    );
+    // TODO: Audit that the environment access only happens in single-threaded code.
+    unsafe {
+        std::env::set_var(
+            RESOURCES_DIR,
+            "C:\\Users\\zhangsan946\\AppData\\Local\\Spaceship\\resources",
+        )
+    };
 
     // let path = "C:\\Users\\zhangsan946\\AppData\\Roaming\\Spaceship\\spaceship.json";
     // let config = Config::load(path)?;

@@ -4,10 +4,10 @@ pub mod addons {
 pub mod stream;
 pub mod xtls;
 
-use super::{request_command, Outbound, ProxySocket, ProxyStream};
+use super::{Outbound, ProxySocket, ProxyStream, request_command};
 use crate::app::config::{OutboundProtocolOption, VlessFlow};
 use crate::app::dns::DnsManager;
-use crate::common::{invalid_data_error, Address};
+use crate::common::{Address, invalid_data_error};
 use crate::pre_check_addr;
 use crate::transport::TransportSettings;
 use async_trait::async_trait;

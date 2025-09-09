@@ -4,8 +4,8 @@ mod http_stream;
 mod utils;
 
 use super::Inbound;
-use crate::app::config::Account;
 use crate::app::Context;
+use crate::app::config::Account;
 use crate::transport::raw::{AcceptOpts, TcpListener};
 use async_trait::async_trait;
 use http_service::HttpService;
@@ -17,7 +17,7 @@ use std::io::{ErrorKind, Result};
 use std::net::SocketAddr;
 use tokio::net::TcpStream;
 use tokio::sync::mpsc;
-use tokio::time::{sleep, Duration};
+use tokio::time::{Duration, sleep};
 
 #[derive(Clone, Debug)]
 pub struct HttpInbound {

@@ -4,11 +4,12 @@ use super::config::{
 };
 use super::router::DEFAULT_OUTBOUND_TAG;
 use super::sniff::Sniffer;
-use crate::common::{invalid_input_error, Address};
+use crate::common::{Address, invalid_input_error};
 #[cfg(feature = "inbound-http")]
 use crate::proxy::http::HttpInbound;
 #[cfg(feature = "outbound-trojan")]
 use crate::proxy::trojan::TrojanOutbound;
+use crate::proxy::{Inbound, Outbound};
 use crate::proxy::{
     blackhole::BlackholeOutbound,
     dns::DnsInbound,
@@ -18,9 +19,8 @@ use crate::proxy::{
     tun::TunInbound,
     vless::VlessOutbound,
 };
-use crate::proxy::{Inbound, Outbound};
-use crate::transport::raw::AcceptOpts;
 use crate::transport::TransportSettings;
+use crate::transport::raw::AcceptOpts;
 use std::collections::{HashMap, HashSet};
 use std::io::{Error, ErrorKind, Result};
 use std::net::SocketAddr;

@@ -13,8 +13,8 @@ use std::{
 };
 use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
 use tokio_rustls::{
-    rustls::{pki_types::ServerName, ClientConfig},
     TlsConnector,
+    rustls::{ClientConfig, pki_types::ServerName},
 };
 
 #[allow(clippy::large_enum_variant)]
@@ -71,7 +71,7 @@ impl ProxyHttpStream {
 }
 
 macro_rules! forward_call {
-    ($self:expr, $method:ident $(, $param:expr)*) => {
+    ($self:expr_2021, $method:ident $(, $param:expr_2021)*) => {
         match $self.as_mut().project() {
             ProxyHttpStreamProj::Http(stream) => stream.$method($($param),*),
             ProxyHttpStreamProj::Https(stream, ..) => stream.$method($($param),*),

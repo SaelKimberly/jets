@@ -2,9 +2,9 @@
 
 use crate::common::Address;
 use hyper::{
+    HeaderMap, Uri, Version,
     header::{GetAll, HeaderValue},
     http::uri::Authority,
-    HeaderMap, Uri, Version,
 };
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
 

@@ -1,6 +1,6 @@
 use super::raw::TcpStream;
 use crate::app::config::TlsSettings;
-use crate::common::{invalid_data_error, invalid_input_error, Address};
+use crate::common::{Address, invalid_data_error, invalid_input_error};
 use crate::proxy::LocalAddr;
 use futures::ready;
 use once_cell::sync::Lazy;
